@@ -5,7 +5,6 @@ import {
 } from '@material-ui/core';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { fetchBooks } from './../../Api/Books/Books'; // Import API function
-import ProjectStatusVisualization from './ProjectStatusVisualization';
 
 function Books() {
   const [projects, setBooks] = useState([]);
@@ -38,38 +37,8 @@ function Books() {
       </ResponsiveContainer>
 
       {/* Table */}
-      <Grid container style={{ marginTop: '30px' }}>
-        <Grid item xs={12}>
-          <TableContainer component={Paper}>
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Project Name</TableCell>
-                  <TableCell>Language</TableCell>
-                  <TableCell>Database</TableCell>
-                  <TableCell>Duration</TableCell>
-                  <TableCell>Register Date</TableCell>
-                  <TableCell>Description</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {projects.map((book) => (
-                  <TableRow key={book.id}>
-                    <TableCell>{book.projectname}</TableCell>
-                    <TableCell>{book.codinglanguage}</TableCell>
-                    <TableCell>{book.databasename}</TableCell>
-                    <TableCell>{book.duration}</TableCell>
-                    <TableCell>{book.registerdate}</TableCell>
-                    <TableCell>{book.description}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid>
-      </Grid>
+     
 
-      <ProjectStatusVisualization />
     </Container>
   );
 }

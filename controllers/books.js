@@ -59,18 +59,29 @@ booksRouter.post('/', async (req, res) => {
 
 //DELETE a book
 booksRouter.delete('/:id', async (req, res) => {
-  const id = req.params.id
-  const user = req.user
+  try {
+    const id = req.params.id
+    const user = req.user
 
-  if (user.userType !== 'admin') {
-    return res
-      .status(401)
-      .send({ error: `You're not an Admin to remove a book` })
-      .end()
+    if (!user || user.userType !== 'admin') {
+      return res
+        .status(401)
+        .send({ error: `You're not an Admin to remove a book` })
+        .end()
+    }
+
+    // Check if project exists
+    const project = await Project.findById(id)
+    if (!project) {
+      return res.status(404).send({ error: 'Project not found' }).end()
+    }
+
+    await Project.findByIdAndRemove(id)
+    return res.status(204).end()
+  } catch (error) {
+    console.error('Delete error:', error)
+    return res.status(500).send({ error: 'Failed to delete project' }).end()
   }
-
-  await Project.findByIdAndRemove(id)
-  return res.status(204).end()
 })
 
 //UPDATE book data
